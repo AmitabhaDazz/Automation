@@ -11,10 +11,12 @@ public class StartAuto {
 
 		System.out.println("The directory to read the RAW files is - : " + url);
 
-		 CmpFileProcessing cmpFileProcessing = new CmpFileProcessing(url);
-
-		
-		cmpFileProcessing.readFile(url);
+		/*
+		 *  CmpFileProcessing cmpFileProcessing = new CmpFileProcessing(url);
+		 * 
+		 * 
+		 * cmpFileProcessing.readFile(url);
+		 */
 
 	System.out.println("Keep Calm and Code");
 	}

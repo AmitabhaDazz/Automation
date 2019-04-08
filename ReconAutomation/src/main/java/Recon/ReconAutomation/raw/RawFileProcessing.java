@@ -75,24 +75,7 @@ try {
 
                      
 
-                        
-
-            /*
-
-             * while (rowIterator.hasNext()) { Cell cell = cellIterator.next(); CmpFilePojo
-
-             * data=new CmpFilePojo(); cmpdataList.add(data); }
-
-             */
-
-                      
-
-            /*
-
-             * for(CmpFilePojo dt: cmpdataList){ System.out.println(""); }
-
-             */
-
+                       
 
     fileInputStreamCmpFile.close();
 

@@ -16,9 +16,10 @@ public class RawFilePojo {
 		}
 		public void setPosttaxtotal(String posttaxtotal) {
 			this.posttaxtotal = posttaxtotal;
+		
 		}
-	    
-        return " firstName=" + firstName
-            + ", lastName=" + lastName + ", salary=" + salary + "]";
+		return "RawFileProcessing [subscriptionid=" + subscriptionid + ", posttaxtotal=" + posttaxtotal
+                + "]";
 }
 }
+

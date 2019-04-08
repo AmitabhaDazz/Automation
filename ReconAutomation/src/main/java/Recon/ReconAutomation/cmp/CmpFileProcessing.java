@@ -38,6 +38,7 @@ public class CmpFileProcessing {
 	
 
 
+
 		public void readFile(String ur) throws IOException {
 			 cmpfileDataColl=new HashMap<String, List<String>>();
             try {
@@ -60,35 +61,8 @@ public class CmpFileProcessing {
 			}
 
 		}
-			
-				
-				/*String sheetName = "AP Recon";
-				XSSFWorkbook workbook;
-			
-				try {
-					FileInputStream fileInputStreamCmpFile=new FileInputStream(new File(ur));
-					workbook = new XSSFWorkbook(fileInputStreamCmpFile);
-					System.out.println("File:" + workbook.getSheetIndex(sheetName));
-					
-		              XSSFSheet sheet = workbook.getSheetAt(1);
-		              ArrayList<CmpFilePojo> cmpdataList = new ArrayList<CmpFilePojo>();
-		             // Iterator<Row> rowIterator = sheet.iterator();
-		              for(int i=sheet.getFirstRowNum()+1;i<=sheet.getLastRowNum();i++) {
-		            	  CmpFilePojo e= new CmpFilePojo();
-		            	  cmpdataList.add(e);
-		              }
-		              int x=0;
-		              for(CmpFilePojo emp: cmpdataList){
-		            	  x++;
-		                  System.out.println("ID:"+emp.getResellerCompanyName()+" firstName:"+emp.getSubscriptionId());
-		                 
-		              }
-		              System.out.println(x);
-		              fileInputStreamCmpFile.close();
-				}
-				catch(Exception e) {
-					e.printStackTrace();				
-				}
-		}*/
+
+		
+
 		  
 }

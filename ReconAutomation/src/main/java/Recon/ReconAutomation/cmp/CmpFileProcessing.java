@@ -25,28 +25,40 @@ public class CmpFileProcessing {
 		}
 
 
-		public void readFile(String ur, String continentCode, String countryCode) {
+		public void readFile(String ur) {
 			
 				
-				String sheetName = "CMP";
+				String sheetName = "AP Recon";
 				XSSFWorkbook workbook;
-				int subscriptionIDColNumber = 0;
-				int postTaxTotalColNumber = 0;
+				
 				
 				
 				try {
-					FileInputStream fileInputStreamCmpFile=new FileInputStream(new File(url));
+					FileInputStream fileInputStreamCmpFile=new FileInputStream(new File(ur));
 					workbook = new XSSFWorkbook(fileInputStreamCmpFile);
-		              XSSFSheet sheet = workbook.getSheetAt(0);
+					System.out.println("File:" + workbook.getSheetIndex(sheetName));
+					
+		              XSSFSheet sheet = workbook.getSheetAt(4);
 		              ArrayList<CmpFilePojo> cmpdataList = new ArrayList<CmpFilePojo>();
-		              for(int i=sheet.getFirstRowNum()+1;i<=sheet.getLastRowNum();i++){
-		            	  CmpFilePojo data=new CmpFilePojo();
-		            	  cmpdataList.add(data);
+		             // Iterator<Row> rowIterator = sheet.iterator();
+		              for(int i=sheet.getFirstRowNum()+1;i<=sheet.getLastRowNum();i++) {
+		            	  CmpFilePojo e= new CmpFilePojo();
+		            	  cmpdataList.add(e);
 		              }
+		              for(CmpFilePojo emp: cmpdataList){
+		                  System.out.println("ID:"+emp.getResellerCompanyName()+" firstName:"+emp.getSubscriptionId());
+		              }
+		              fileInputStreamCmpFile.close();
+		             
+						
+			/*
+			 * while (rowIterator.hasNext()) { Cell cell = cellIterator.next(); CmpFilePojo
+			 * data=new CmpFilePojo(); cmpdataList.add(data); }
+			 */
 		              
-		              for(CmpFilePojo dt: cmpdataList){
-		                  System.out.println("");
-		              }
+			/*
+			 * for(CmpFilePojo dt: cmpdataList){ System.out.println(""); }
+			 */
 
 		              fileInputStreamCmpFile.close();
 				}

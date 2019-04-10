@@ -1,82 +1,113 @@
 package Recon.ReconAutomation.raw;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Locale;
 import java.util.Map;
-
-import com.sun.xml.internal.bind.v2.runtime.reflect.ListIterator;
-
 
 public class RawFileProcessed {
 
-	private List<RawFilePojo> rawList;
-   Map<String, List<RawFilePojo>> subscriptionidMap = new HashMap<String, List<RawFilePojo>>();
-   public RawFileProcessed(List<RawFilePojo> cmpList) {
-
-	this.rawList = rawList;
-    ListIterator<RawFilePojo> iterator = (ListIterator<RawFilePojo>) rawList.listIterator();
-
-	String subscriptionID = "";
-
-	String resellerCost = "";
-
-	String posttaxtotalCost = "";
-
-	List<RawFilePojo> localListperSubscriptionID;
-
-	while (iterator.hasNext()) {
-
-	RawFilePojo objj = (RawFilePojo)iterator.next();
-
-	subscriptionID = objj.getSubscriptionid();
-
-	resellerCost = objj.getResellerCost();
-
-	if(subscriptionidMap.containsKey(subscriptionID)) {
-
-	localListperSubscriptionID = subscriptionidMap.get(subscriptionID);
-
-	localListperSubscriptionID.add(objj);
-
-	subscriptionidMap.put(subscriptionID, localListperSubscriptionID);
-
-	}else {
-
-	localListperSubscriptionID = new ArrayList<RawFilePojo>();
-    localListperSubscriptionID.add(objj);
-    subscriptionidMap.put(subscriptionID, localListperSubscriptionID);
+	private List<RawFilePojo> RawList;
+	Map<String, List<RawFilePojo>> subscriptionIDMap = new HashMap<String, List<RawFilePojo>>();
+	
+	public RawFileProcessed(List<RawFilePojo> RawList) {
+		this.RawList = RawList;
 	}
-       } 
-	      }
 
-public Map<String, List<RawFilePojo>> getSubscriptionIDMap() {
-return subscriptionidMap;
+	public void createMapBySubscriptionID(){
+		ListIterator<RawFilePojo> iterator = RawList.listIterator();
+		String subscriptionID = "";
+		List<RawFilePojo> localListperSubscritionID;
+		while (iterator.hasNext()) {
+			RawFilePojo obj = (RawFilePojo)iterator.next();
+			subscriptionID = obj.getSubscriptionid();
+
+			if(subscriptionIDMap.containsKey(subscriptionID)) {
+				localListperSubscritionID = subscriptionIDMap.get(subscriptionID);
+				localListperSubscritionID.add(obj);
+				subscriptionIDMap.put(subscriptionID, localListperSubscritionID);
+
+			}else {
+				localListperSubscritionID = new ArrayList<RawFilePojo>();
+				localListperSubscritionID.add(obj);
+				subscriptionIDMap.put(subscriptionID, localListperSubscritionID);
+			}
+		}
+	}
+
+
+
+	
+
+	public Map<String, List<RawFilePojo>> getSubscriptionIDMap() {
+		return subscriptionIDMap;
+	}
+
+	public void setSubscriptionIDMap(Map<String, List<RawFilePojo>> subscriptionIDMap) {
+		this.subscriptionIDMap = subscriptionIDMap;
+	}
+
+
+
+
+	public String getResellerCostBySubscriptionID(String subscriptionID){
+		List<RawFilePojo> subTotal = subscriptionIDMap.get(subscriptionID);
+		ListIterator<RawFilePojo> iterator = subTotal.listIterator();
+		BigDecimal bigDecimalResellerCost = new BigDecimal(0.0);
+		bigDecimalResellerCost.setScale(3, BigDecimal.ROUND_CEILING);
+		while (iterator.hasNext()) {
+			RawFilePojo obj = (RawFilePojo)iterator.next();
+			String resellecrCost = obj.getResellerCost().toString();
+			BigDecimal resellerCosrBD = new BigDecimal(resellecrCost);
+			resellerCosrBD.setScale(3, BigDecimal.ROUND_CEILING);
+			bigDecimalResellerCost = bigDecimalResellerCost.add(new BigDecimal(format(obj.getResellerCost().toString(), resellerCosrBD.scale() > 0 ? resellerCosrBD.precision() : resellerCosrBD.scale())));
+		}
+		return bigDecimalResellerCost.toString();
+	}
+
+	public String getPosttaxtotalCostBySubscriptionID(String subscriptionID){
+		List<RawFilePojo> subTotal = subscriptionIDMap.get(subscriptionID);
+		ListIterator<RawFilePojo> iterator = subTotal.listIterator();
+		BigDecimal bigDecimalpostTaxTotal = new BigDecimal(0.0);
+		bigDecimalpostTaxTotal.setScale(3, BigDecimal.ROUND_CEILING);
+		while (iterator.hasNext()) {
+			RawFilePojo obj = (RawFilePojo)iterator.next();
+			String postTaxTotal = obj.getPosttaxtotal().toString();
+			BigDecimal postTaxTotalBD = new BigDecimal(postTaxTotal);
+			postTaxTotalBD.setScale(3, BigDecimal.ROUND_CEILING);
+			bigDecimalpostTaxTotal = bigDecimalpostTaxTotal.add(new BigDecimal(format(obj.getPosttaxtotal().toString(), postTaxTotalBD.scale() > 0 ? postTaxTotalBD.precision() : postTaxTotalBD.scale())));
+		}
+		return bigDecimalpostTaxTotal.toString();
+	}
+
+	/*
+	 * Partner Cost Total from Raw File
+	 */
+	
+
+
+	private String format(String number, int scale) {
+		BigDecimal value = new BigDecimal(number);
+		DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(Locale.US);
+		BigDecimal positive = new BigDecimal(1);// scale is zero
+		positive.setScale(0);// unnecessary
+		BigDecimal negative = new BigDecimal(-1);// scale is zero
+		negative.setScale(0);// unnecessary
+		if (value.compareTo(positive) == 1 || value.compareTo(negative) == -1) {
+			symbols.setExponentSeparator("e+");
+		} else {
+			symbols.setExponentSeparator("e");
+		}
+		DecimalFormat formatter = new DecimalFormat("0.0E0", symbols);
+		formatter.setRoundingMode(RoundingMode.HALF_UP);
+		formatter.setMinimumFractionDigits(scale);
+		return formatter.format(value);
+	}
+
 }
-    public void setSubscriptionIDMap(Map<String, List<RawFilePojo>> subscriptionIDMap) {
-     this.subscriptionidMap = subscriptionIDMap;
-}
-public Map<String, List<RawFilePojo>> getAllSubscriptionIDTotal(){
-return subscriptionidMap;
-}
-	public String getSubscriptionIDTotalResellerCost(String subscriptionID){
-    List<RawFilePojo> subTotal = subscriptionidMap.get(subscriptionID);
-    ListIterator<RawFilePojo> iterator = (ListIterator<RawFilePojo>) subTotal.listIterator();
-    BigDecimal bigDecimalResellerCost = new BigDecimal(0.0);
-    bigDecimalResellerCost.setScale(2, BigDecimal.ROUND_UP);
-    while (iterator.hasNext()) {
-
-	RawFilePojo obj = (RawFilePojo)iterator.next();
-
-	bigDecimalResellerCost = bigDecimalResellerCost.add(new BigDecimal(obj.getResellerCost().toString()));
-
-	System.out.println(bigDecimalResellerCost);
-
-}
-
-return bigDecimalResellerCost.toString();
-
-	    }
-
-	    }

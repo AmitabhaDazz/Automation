@@ -11,6 +11,8 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 
+import Recon.ReconAutomation.cmp.CmpFilePojo;
+
 public class RawFileProcessed {
 
 	private List<RawFilePojo> RawList;
@@ -85,11 +87,6 @@ public class RawFileProcessed {
 		}
 		return bigDecimalpostTaxTotal.toString();
 	}
-
-	/*
-	 * Partner Cost Total from Raw File
-	 */
-	
 
 
 	private String format(String number, int scale) {

@@ -21,6 +21,7 @@ public class RawFileProcessed {
 	public RawFileProcessed(List<RawFilePojo> RawList) {
 		this.RawList = RawList;
 	}
+	
 
 	public void createMapBySubscriptionID(){
 		ListIterator<RawFilePojo> iterator = RawList.listIterator();

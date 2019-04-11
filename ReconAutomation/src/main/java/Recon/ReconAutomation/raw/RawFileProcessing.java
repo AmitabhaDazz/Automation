@@ -121,6 +121,7 @@ public String getPosttaxtotalCostBySubscriptionID(String subscriptionID){
 }
 
 
+
 private String format(String number, int scale) {
 	BigDecimal value = new BigDecimal(number);
 	DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(Locale.US);

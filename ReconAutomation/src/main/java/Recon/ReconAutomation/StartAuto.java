@@ -24,14 +24,13 @@ public class StartAuto {
 		RawFileProcessing rawFileProcessing = new RawFileProcessing();
 		rawFileProcessing.readFile(urlraw); 
 		System.out.println("Keep Calm and Code");
-
-
-		RawFileProcessed processedObj = new RawFileProcessed(rawFileProcessing.getRawFilePojoList());
-		processedObj.createMapBySubscriptionID();
-
-		for (Map.Entry<String, List<RawFilePojo>> entry : processedObj.getSubscriptionIDMap().entrySet()) { 
+		System.out.println(rawFileProcessing.getRawmapforpojo());
+//		RawFileProcessed processedObj = new RawFileProcessed(rawFileProcessing.getRawFilePojoMap());
+//		processedObj.createMapBySubscriptionID();
+		
+		for (Map.Entry<String, List<RawFilePojo>> entry : rawFileProcessing.getRawmapforpojo().entrySet()) { 
 			String subId= entry.getKey();
-			System.out.println("For "  + subId + ", ResellerCostTotal is = " +  processedObj.getResellerCostBySubscriptionID(subId));
+			System.out.println("For "  + subId + ", ResellerCostTotal is = " +  rawFileProcessing.getResellerCostBySubscriptionID(subId)+ "PostTaxTotal is= " +rawFileProcessing.getPosttaxtotalCostBySubscriptionID(subId));
 			}
 	}
 }

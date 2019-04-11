@@ -13,7 +13,7 @@ public class OutputPojo {
 	
 	
 	String partnerCenterIngramCost;
-	String parnerCenterResellerCost;
+	String partnerCenterResellerCost;
 	String iMcostVarience;
 	String iMcostVariencePercentage;
 	String partnerCenterCostVarience;
@@ -45,10 +45,10 @@ public class OutputPojo {
 		this.partnerCenterIngramCost = partnerCenterIngramCost;
 	}
 	public String getParnerCenterResellerCost() {
-		return parnerCenterResellerCost;
+		return partnerCenterResellerCost;
 	}
 	public void setParnerCenterResellerCost(String parnerCenterResellerCost) {
-		this.parnerCenterResellerCost = parnerCenterResellerCost;
+		this.partnerCenterResellerCost = parnerCenterResellerCost;
 	}
 	public String getiMcostVarience() {
 		return iMcostVarience;

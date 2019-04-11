@@ -90,39 +90,55 @@ public void readFile(String ur) {
 	}
 	}
 
-	public String getResellerCostBySubscriptionID(String subscriptionID) {
-		List<RawFilePojo> listRawFile = getRawmapforpojo().get(subscriptionID);
-		ListIterator<RawFilePojo> iterator = listRawFile.listIterator();
-		BigDecimal bigDecimalResellerCost = new BigDecimal(0.0);
-		bigDecimalResellerCost.setScale(3, BigDecimal.ROUND_CEILING);
-		while (iterator.hasNext()) {
-			RawFilePojo obj = (RawFilePojo)iterator.next();
-			String resellecrCost = obj.getResellerCost().toString();
-			BigDecimal resellerCosrBD = new BigDecimal(resellecrCost);
-			resellerCosrBD.setScale(3, BigDecimal.ROUND_CEILING);
-			bigDecimalResellerCost = bigDecimalResellerCost.add(new BigDecimal(format(obj.getResellerCost().toString(), resellerCosrBD.scale() > 0 ? resellerCosrBD.precision() : resellerCosrBD.scale())));
-		
-		}
-		return bigDecimalResellerCost.toString();
+public String getResellerCostBySubscriptionID(String subscriptionID){
+	List<RawFilePojo> subTotal = rawmapforpojo.get(subscriptionID);
+	ListIterator<RawFilePojo> iterator = subTotal.listIterator();
+	BigDecimal bigDecimalResellerCost = new BigDecimal(0.0);
+	bigDecimalResellerCost.setScale(3, BigDecimal.ROUND_CEILING);
+	while (iterator.hasNext()) {
+		RawFilePojo obj = (RawFilePojo)iterator.next();
+		String resellecrCost = obj.getResellerCost().toString();
+		BigDecimal resellerCosrBD = new BigDecimal(resellecrCost);
+		resellerCosrBD.setScale(3, BigDecimal.ROUND_CEILING);
+		bigDecimalResellerCost = bigDecimalResellerCost.add(new BigDecimal(format(obj.getResellerCost().toString(), resellerCosrBD.scale() > 0 ? resellerCosrBD.precision() : resellerCosrBD.scale())));
 	}
-	
-	private String format(String number, int scale) {
-		BigDecimal value = new BigDecimal(number);
-		DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(Locale.US);
-		BigDecimal positive = new BigDecimal(1);// scale is zero
-		positive.setScale(0);// unnecessary
-		BigDecimal negative = new BigDecimal(-1);// scale is zero
-		negative.setScale(0);// unnecessary
-		if (value.compareTo(positive) == 1 || value.compareTo(negative) == -1) {
-			symbols.setExponentSeparator("e+");
-		} else {
-			symbols.setExponentSeparator("e");
-		}
-		DecimalFormat formatter = new DecimalFormat("0.0E0", symbols);
-		formatter.setRoundingMode(RoundingMode.HALF_UP);
-		formatter.setMinimumFractionDigits(scale);
-		return formatter.format(value);
+	return bigDecimalResellerCost.toString();
+}
+
+public String getPosttaxtotalCostBySubscriptionID(String subscriptionID){
+	List<RawFilePojo> subTotal = rawmapforpojo.get(subscriptionID);
+	ListIterator<RawFilePojo> iterator = subTotal.listIterator();
+	BigDecimal bigDecimalpostTaxTotal = new BigDecimal(0.0);
+	bigDecimalpostTaxTotal.setScale(3, BigDecimal.ROUND_CEILING);
+	while (iterator.hasNext()) {
+		RawFilePojo obj = (RawFilePojo)iterator.next();
+		String postTaxTotal = obj.getPosttaxtotal().toString();
+		BigDecimal postTaxTotalBD = new BigDecimal(postTaxTotal);
+		postTaxTotalBD.setScale(3, BigDecimal.ROUND_CEILING);
+		bigDecimalpostTaxTotal = bigDecimalpostTaxTotal.add(new BigDecimal(format(obj.getPosttaxtotal().toString(), postTaxTotalBD.scale() > 0 ? postTaxTotalBD.precision() : postTaxTotalBD.scale())));
 	}
+	return bigDecimalpostTaxTotal.toString();
+}
+
+
+private String format(String number, int scale) {
+	BigDecimal value = new BigDecimal(number);
+	DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(Locale.US);
+	BigDecimal positive = new BigDecimal(1);// scale is zero
+	positive.setScale(0);// unnecessary
+	BigDecimal negative = new BigDecimal(-1);// scale is zero
+	negative.setScale(0);// unnecessary
+	if (value.compareTo(positive) == 1 || value.compareTo(negative) == -1) {
+		symbols.setExponentSeparator("e+");
+	} else {
+		symbols.setExponentSeparator("e");
+	}
+	DecimalFormat formatter = new DecimalFormat("0.0E0", symbols);
+	formatter.setRoundingMode(RoundingMode.HALF_UP);
+	formatter.setMinimumFractionDigits(scale);
+	return formatter.format(value);
+}
+
 }
 
 

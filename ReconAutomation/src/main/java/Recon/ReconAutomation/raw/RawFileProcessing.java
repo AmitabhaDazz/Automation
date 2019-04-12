@@ -28,20 +28,22 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import org.apache.commons.collections4.map.CaseInsensitiveMap;
+
 import Recon.ReconAutomation.raw.RawFilePojo;
 
 
 public class RawFileProcessing{
 	
 
-	Map<String, List<RawFilePojo>> rawmapforpojo = new HashMap<String, List<RawFilePojo>>();
+	CaseInsensitiveMap<String, List<RawFilePojo>> rawmapforpojo = new CaseInsensitiveMap<String, List<RawFilePojo>>();
 
 
-	public Map<String, List<RawFilePojo>> getRawmapforpojo() {
+	public CaseInsensitiveMap<String, List<RawFilePojo>> getRawmapforpojo() {
 			return rawmapforpojo;
 		}
 	
-		public void setRawmapforpojo(Map<String, List<RawFilePojo>> rawmapforpojo) {
+		public void setRawmapforpojo(CaseInsensitiveMap<String, List<RawFilePojo>> rawmapforpojo) {
 			this.rawmapforpojo = rawmapforpojo;
 		}
 	
@@ -95,33 +97,42 @@ public void readFile(String ur) {
 	}
 
 public String getResellerCostBySubscriptionID(String subscriptionID){
-	List<RawFilePojo> subTotal = rawmapforpojo.get(subscriptionID);
-	ListIterator<RawFilePojo> iterator = subTotal.listIterator();
-	BigDecimal bigDecimalResellerCost = new BigDecimal(0.0);
-	bigDecimalResellerCost.setScale(3, BigDecimal.ROUND_CEILING);
-	while (iterator.hasNext()) {
-		RawFilePojo obj = (RawFilePojo)iterator.next();
-		String resellecrCost = obj.getResellerCost().toString();
-		BigDecimal resellerCosrBD = new BigDecimal(resellecrCost);
-		resellerCosrBD.setScale(3, BigDecimal.ROUND_CEILING);
-		bigDecimalResellerCost = bigDecimalResellerCost.add(new BigDecimal(format(obj.getResellerCost().toString(), resellerCosrBD.scale() > 0 ? resellerCosrBD.precision() : resellerCosrBD.scale())));
+	if(rawmapforpojo.containsKey(subscriptionID)){
+		List<RawFilePojo> subTotal = rawmapforpojo.get(subscriptionID);
+		ListIterator<RawFilePojo> iterator = subTotal.listIterator();
+		BigDecimal bigDecimalResellerCost = new BigDecimal(0.0);
+		bigDecimalResellerCost.setScale(3, BigDecimal.ROUND_CEILING);
+		while (iterator.hasNext()) {
+			RawFilePojo obj = (RawFilePojo)iterator.next();
+			String resellecrCost = obj.getResellerCost().toString();
+			BigDecimal resellerCosrBD = new BigDecimal(resellecrCost);
+			resellerCosrBD.setScale(3, BigDecimal.ROUND_CEILING);
+			bigDecimalResellerCost = bigDecimalResellerCost.add(new BigDecimal(format(obj.getResellerCost().toString(), resellerCosrBD.scale() > 0 ? resellerCosrBD.precision() : resellerCosrBD.scale())));
+		}
+		return bigDecimalResellerCost.toString();
+	}else {
+		return "NA";
 	}
-	return bigDecimalResellerCost.toString();
+	
 }
 
 public String getPosttaxtotalCostBySubscriptionID(String subscriptionID){
-	List<RawFilePojo> subTotal = rawmapforpojo.get(subscriptionID);
-	ListIterator<RawFilePojo> iterator = subTotal.listIterator();
-	BigDecimal bigDecimalpostTaxTotal = new BigDecimal(0.0);
-	bigDecimalpostTaxTotal.setScale(3, BigDecimal.ROUND_CEILING);
-	while (iterator.hasNext()) {
-		RawFilePojo obj = (RawFilePojo)iterator.next();
-		String postTaxTotal = obj.getPosttaxtotal().toString();
-		BigDecimal postTaxTotalBD = new BigDecimal(postTaxTotal);
-		postTaxTotalBD.setScale(3, BigDecimal.ROUND_CEILING);
-		bigDecimalpostTaxTotal = bigDecimalpostTaxTotal.add(new BigDecimal(format(obj.getPosttaxtotal().toString(), postTaxTotalBD.scale() > 0 ? postTaxTotalBD.precision() : postTaxTotalBD.scale())));
+	if(rawmapforpojo.containsKey(subscriptionID)){
+		List<RawFilePojo> subTotal = rawmapforpojo.get(subscriptionID);
+		ListIterator<RawFilePojo> iterator = subTotal.listIterator();
+		BigDecimal bigDecimalpostTaxTotal = new BigDecimal(0.0);
+		bigDecimalpostTaxTotal.setScale(3, BigDecimal.ROUND_CEILING);
+		while (iterator.hasNext()) {
+			RawFilePojo obj = (RawFilePojo)iterator.next();
+			String postTaxTotal = obj.getPosttaxtotal().toString();
+			BigDecimal postTaxTotalBD = new BigDecimal(postTaxTotal);
+			postTaxTotalBD.setScale(3, BigDecimal.ROUND_CEILING);
+			bigDecimalpostTaxTotal = bigDecimalpostTaxTotal.add(new BigDecimal(format(obj.getPosttaxtotal().toString(), postTaxTotalBD.scale() > 0 ? postTaxTotalBD.precision() : postTaxTotalBD.scale())));
+		}
+		return bigDecimalpostTaxTotal.toString();
+	}else {
+		return "NA";
 	}
-	return bigDecimalpostTaxTotal.toString();
 }
 
 

@@ -26,9 +26,9 @@ public class CmpFileProcessing {
 			 BufferedReader br = new BufferedReader(new FileReader(new File(filePath)));
 			 while((line = br.readLine()) != null){
 				  String[] b = line.split(",");
-				  if(line.length()>60 && b[1]!=null && !b[1].equalsIgnoreCase("ResellerCompanyName") && b[6]!=null && b[19]!=null && b[20]!=null ) {
+				  if(line.length()>60 && b[1]!=null && !b[1].equalsIgnoreCase("ResellerCompanyName") && b[6]!=null && b[20]!=null && b[21]!=null ) {
 					  if(rownum>=1) {
-						  cmpfilepojo = new CmpFilePojo(b[1],b[6],b[19],b[20]);
+						  cmpfilepojo = new CmpFilePojo(b[1],b[6],b[20],b[21]);
 						  this.cmpfilePojoList.add(cmpfilepojo);
 					  }
 					  
@@ -45,12 +45,12 @@ public class CmpFileProcessing {
 		}			 
 	 }
 	
-	public List getCmpfilePojoList() {
+	public List<CmpFilePojo> getCmpfilePojoList() {
 		return cmpfilePojoList;
 	}
 
 
-	public void setCmpfilePojoList(List cmpfilePojoList) {
+	public void setCmpfilePojoList(List<CmpFilePojo> cmpfilePojoList) {
 		this.cmpfilePojoList = cmpfilePojoList;
 	}
 }

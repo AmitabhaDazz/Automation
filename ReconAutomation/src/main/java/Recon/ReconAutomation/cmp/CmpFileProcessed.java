@@ -13,11 +13,13 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.collections4.map.CaseInsensitiveMap;
+
 public class CmpFileProcessed {
 	
 	private List<CmpFilePojo> cmpList;
-	Map<String, List<CmpFilePojo>> subscriptionIDMap = new HashMap<String, List<CmpFilePojo>>();
-	Map<String, List<CmpFilePojo>> resellerCompanyNameMap = new HashMap<String, List<CmpFilePojo>>();
+	CaseInsensitiveMap<String, List<CmpFilePojo>> subscriptionIDMap = new CaseInsensitiveMap<String, List<CmpFilePojo>>();
+	CaseInsensitiveMap<String, List<CmpFilePojo>> resellerCompanyNameMap = new CaseInsensitiveMap<String, List<CmpFilePojo>>();
 	
 	public CmpFileProcessed(List<CmpFilePojo> cmpList) {
 		this.cmpList = cmpList;
@@ -69,15 +71,15 @@ public class CmpFileProcessed {
 		return resellerCompanyNameMap;
 	}
 
-	public void setResellerCompanyNameMap(Map<String, List<CmpFilePojo>> resellerCompanyNameMap) {
+	public void setResellerCompanyNameMap(CaseInsensitiveMap<String, List<CmpFilePojo>> resellerCompanyNameMap) {
 		this.resellerCompanyNameMap = resellerCompanyNameMap;
 	}
 
-	public Map<String, List<CmpFilePojo>> getSubscriptionIDMap() {
+	public CaseInsensitiveMap<String, List<CmpFilePojo>> getSubscriptionIDMap() {
 		return subscriptionIDMap;
 	}
 
-	public void setSubscriptionIDMap(Map<String, List<CmpFilePojo>> subscriptionIDMap) {
+	public void setSubscriptionIDMap(CaseInsensitiveMap<String, List<CmpFilePojo>> subscriptionIDMap) {
 		this.subscriptionIDMap = subscriptionIDMap;
 	}
 
@@ -134,8 +136,8 @@ public class CmpFileProcessed {
 		bigDecimalResellerCost.setScale(3, BigDecimal.ROUND_CEILING);
 		while (iterator.hasNext()) {
 			CmpFilePojo obj = (CmpFilePojo)iterator.next();
-			String resellecrCost = obj.getPartnerCost().toString();
-			BigDecimal resellerCosrBD = new BigDecimal(resellecrCost);
+			String partnerCost = obj.getPartnerCost().toString();
+			BigDecimal resellerCosrBD = new BigDecimal(partnerCost);
 			resellerCosrBD.setScale(3, BigDecimal.ROUND_CEILING);
 			bigDecimalResellerCost = bigDecimalResellerCost.add(new BigDecimal(format(obj.getPartnerCost().toString(), resellerCosrBD.scale() > 0 ? resellerCosrBD.precision() : resellerCosrBD.scale())));
 		}
@@ -169,7 +171,7 @@ public class CmpFileProcessed {
 		return null;
 	}
 	
-	private  String format(String number, int scale) {
+	public  String format(String number, int scale) {
 	    BigDecimal value = new BigDecimal(number);
 	    DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(Locale.US);
 	    BigDecimal positive = new BigDecimal(1);// scale is zero

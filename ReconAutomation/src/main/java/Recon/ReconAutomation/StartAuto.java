@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
 
+import OutputAutomation.ExcelWriter;
 import OutputAutomation.OutputPojo;
 import OutputAutomation.OutputPojoforReseller;
 import Recon.ReconAutomation.cmp.CmpFilePojo;
@@ -26,10 +27,17 @@ import Recon.ReconAutomation.raw.RawFileProcessing;
 public class StartAuto {
 	public static void main(String[] args) throws IOException {
 
-		String urlCmp = "F:\\Raw\\Partner Reconciliation AzureTR custom period Feb 2, 2019 - Mar 1, 2019.csv";
-		System.out.println("The directory to read the CMP files is - : " + urlCmp);
-		String urlraw ="F:\\Raw\\TR_Mar 2019.xlsx";
-		System.out.println("The directory to read the RAW files is - : " + urlraw);
+		
+		//Reading from config File
+		configFileProcess configPath = new configFileProcess();
+		System.out.println(configPath.readFileCmp());
+		
+		  String urlCmp= configPath.readFileCmp();
+		  String urlraw=configPath.readFileRaw();
+		  
+		 
+		
+		
 		//System.out.println(rawFileProcessing.getRawmapforpojo());
 //		RawFileProcessed processedObj = new RawFileProcessed(rawFileProcessing.getRawFilePojoMap());
 //		processedObj.createMapBySubscriptionID();
@@ -43,7 +51,7 @@ public class StartAuto {
 		CmpFileProcessed processedObj = new CmpFileProcessed(cmp.getCmpfilePojoList());
 		processedObj.createMapBySubscriptionID();
 		processedObj.createMapByResellerCompanyName();
-		//System.out.println(processedObj.getCmpIngramMicroCostByResellerCompName("LTS BILG.ELEKT.REKL.BIL.VE DAN.HIZM"));
+		System.out.println(processedObj.getCmpIngramMicroCostByResellerCompName("EFA BILISIM YAZIL.DANIS.BILGI.EGITI"));
 		CaseInsensitiveMap<String, OutputPojo> outputMap = new CaseInsensitiveMap<String, OutputPojo>();
 		for (Map.Entry<String, List<CmpFilePojo>> entry : processedObj.getSubscriptionIDMap().entrySet()) {
 			String subscriptionID = entry.getKey();
@@ -95,7 +103,10 @@ public class StartAuto {
 		for (Map.Entry<String,OutputPojo> entry : outputMapFinal.entrySet()) {
 			String resellecrCompanyNameFinal= entry.getKey();
 			OutputPojo outputObjLocal = outputMapFinal.get(resellecrCompanyNameFinal);
-			System.out.println(outputObjLocal.getResellerCompanyName() + "-" + outputObjLocal.getCmpIngramMicroCost() +"-"+ outputObjLocal.getCmpResellerCost()+"-"+outputObjLocal.getPartnerCenterIngramCost()+"-"+outputObjLocal.getParnerCenterResellerCost());
+			//System.out.println(outputObjLocal.getResellerCompanyName() + "-" + outputObjLocal.getCmpIngramMicroCost() +"-"+ outputObjLocal.getCmpResellerCost()+"-"+outputObjLocal.getPartnerCenterIngramCost()+"-"+outputObjLocal.getParnerCenterResellerCost());
+			System.out.println(outputObjLocal.getResellerCompanyName() + "-" + processedObj.getCmpIngramMicroCostByResellerCompName(resellecrCompanyNameFinal) +"-"+ processedObj.getCmpResellerCostByResellerCompName(resellecrCompanyNameFinal)+"-"+outputObjLocal.getPartnerCenterIngramCost()+"-"+outputObjLocal.getParnerCenterResellerCost());
+			ExcelWriter ob=new ExcelWriter();
+			ob.printExcel();
 		}
 		
 	}

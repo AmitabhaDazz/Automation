@@ -87,6 +87,7 @@ public void readFile(String ur) {
 					}
 				}
 			}
+			
 		rownum++;
 		}
 		fileInputStreamRawFile.close();

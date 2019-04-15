@@ -144,6 +144,7 @@ public class CmpFileProcessed {
 		return bigDecimalResellerCost.toString();
 	}
 	
+	
 	/*
 	 * Reseller cost from CMP file
 	 */

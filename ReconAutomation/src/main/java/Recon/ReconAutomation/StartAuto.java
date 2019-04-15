@@ -34,7 +34,7 @@ public class StartAuto {
 		
 		//Reading from config File
 		configFileProcess configPath = new configFileProcess();
-		System.out.println(configPath.readFileCmp());
+		//System.out.println(configPath.readFileCmp());
 		
 		  String urlCmp= configPath.readFileCmp();
 		  String urlraw=configPath.readFileRaw();
@@ -123,7 +123,7 @@ public class StartAuto {
 			Row row = sheet .createRow(i+1);
 			OutputPojo outputObjLocal = outputMapFinal.get(resellecrCompanyNameFinal);
 			//System.out.println(outputObjLocal.getResellerCompanyName() + "-" + outputObjLocal.getCmpIngramMicroCost() +"-"+ outputObjLocal.getCmpResellerCost()+"-"+outputObjLocal.getPartnerCenterIngramCost()+"-"+outputObjLocal.getParnerCenterResellerCost());
-			System.out.println(outputObjLocal.getResellerCompanyName() + "-" + processedObj.getCmpIngramMicroCostByResellerCompName(resellecrCompanyNameFinal) +"-"+ processedObj.getCmpResellerCostByResellerCompName(resellecrCompanyNameFinal)+"-"+outputObjLocal.getPartnerCenterIngramCost()+"-"+outputObjLocal.getParnerCenterResellerCost());
+			//System.out.println(outputObjLocal.getResellerCompanyName() + "-" + processedObj.getCmpIngramMicroCostByResellerCompName(resellecrCompanyNameFinal) +"-"+ processedObj.getCmpResellerCostByResellerCompName(resellecrCompanyNameFinal)+"-"+outputObjLocal.getPartnerCenterIngramCost()+"-"+outputObjLocal.getParnerCenterResellerCost());
 			row.createCell(0).setCellValue(outputObjLocal.getResellerCompanyName() );
 			row.createCell(1).setCellValue(processedObj.getCmpIngramMicroCostByResellerCompName(resellecrCompanyNameFinal));
 			row.createCell(2).setCellValue(processedObj.getCmpResellerCostByResellerCompName(resellecrCompanyNameFinal));

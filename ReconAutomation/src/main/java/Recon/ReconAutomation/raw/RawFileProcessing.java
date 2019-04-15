@@ -81,7 +81,7 @@ public void readFile(String ur) {
 						rawfilePojoList = rawmapforpojo.get(row.getCell(9).toString());
 						rawfilePojoList.add(rawfilepojo);
 					}else {
-						rawfilePojoList = new ArrayList<RawFilePojo>();
+						
 						rawfilePojoList.add(rawfilepojo);
 						rawmapforpojo.put(row.getCell(9).toString(), rawfilePojoList);
 					}

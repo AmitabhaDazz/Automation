@@ -38,7 +38,7 @@ public class StartAuto {
 		
 		  String urlCmp= configPath.readFileCmp();
 		  String urlraw=configPath.readFileRaw();
-		  
+		  String urloutput=configPath.readFileOutput();
 		 
 		
 		
@@ -134,16 +134,9 @@ public class StartAuto {
 		}
 		
 		
-		FileOutputStream fOut = new FileOutputStream("E:\\New folder\\dump\\op.xlsx");
+		FileOutputStream fOut = new FileOutputStream(urloutput);
 		excelWookBook.write(fOut);
 		fOut.close();
-		/*
-		 * ExcelWriter ob=new ExcelWriter();
-		 * ob.printExcel("E:\\New folder\\dump\\op.xlsx");
-		 */
-		
-		
-		
 		
 	}
 	

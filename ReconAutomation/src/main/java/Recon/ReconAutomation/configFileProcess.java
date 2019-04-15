@@ -20,5 +20,10 @@ public class configFileProcess {
 		 ar = rb.getString("raw");
 	    return ar;
 	}
-	
+	public String readFileOutput() {
+		String ar=null;
+		
+		 ar = rb.getString("output");
+	    return ar;
+	}
 }

@@ -5,8 +5,17 @@ public class RawFilePojo {
 	 String subscriptionid;
 	 String posttaxtotal;
 	 String resellerCost;
+	 String resellerCompName;
 	 
-	 public String getResellerCost() {
+	 public String getResellerCompName() {
+		return resellerCompName;
+	}
+
+	public void setResellerCompName(String resellerCompName) {
+		this.resellerCompName = resellerCompName;
+	}
+
+	public String getResellerCost() {
 		return resellerCost;
 	}
 

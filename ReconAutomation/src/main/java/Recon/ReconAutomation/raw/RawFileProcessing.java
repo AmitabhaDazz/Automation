@@ -127,7 +127,31 @@ public class RawFileProcessing{
 			}
 			return bigDecimalResellerCost.toString();
 	}
-		
+	
+	public String getPartnerCenterIMCostByResellerCompanyName(String resellerCompanyName){
+		List<RawFilePojo> allsameRCNList = new ArrayList<RawFilePojo>();
+		for (Map.Entry<String, List<RawFilePojo>> entry : rawmapforpojo.entrySet()) { 
+			List<RawFilePojo> rawpojo = entry.getValue();
+			if(resellerCompanyName!=null) {
+			if(rawpojo.get(0).getResellerCompName().equalsIgnoreCase(resellerCompanyName)) {
+				allsameRCNList.addAll(rawpojo);
+			}
+			}
+		}
+				
+			ListIterator<RawFilePojo> iterator = allsameRCNList.listIterator();
+			BigDecimal bigDecimalPostTaxTotal = new BigDecimal(0.0);
+			bigDecimalPostTaxTotal.setScale(3, BigDecimal.ROUND_CEILING);
+			while (iterator.hasNext()) {
+				RawFilePojo obj = (RawFilePojo)iterator.next();
+				String partnetCenterIMCost = obj.getPosttaxtotal().toString();
+				BigDecimal partnerCenterCost = new BigDecimal(partnetCenterIMCost);
+				partnerCenterCost.setScale(3, BigDecimal.ROUND_CEILING);
+				bigDecimalPostTaxTotal = bigDecimalPostTaxTotal.add(new BigDecimal(format(obj.getPosttaxtotal().toString(), partnerCenterCost.scale() > 0 ? partnerCenterCost.precision() : partnerCenterCost.scale())));
+			}
+			return bigDecimalPostTaxTotal.toString();
+	}
+	
 	public String getResellerCostBySubscriptionID(String subscriptionID){
 		if(rawmapforpojo.containsKey(subscriptionID)){
 			List<RawFilePojo> subTotal = rawmapforpojo.get(subscriptionID);

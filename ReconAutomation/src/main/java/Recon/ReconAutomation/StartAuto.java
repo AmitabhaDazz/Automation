@@ -80,7 +80,7 @@ public class StartAuto {
 				System.out.println(compName);
 				output.setResellerCompanyName(processedObj.getResellerCompanyNameBySubscriptionID(subId.toString()));
 				output.setParnerCenterResellerCost(rawFileProcessing.getResellerCostByResellerCompanyName(compName));
-				output.setPartnerCenterIngramCost(rawFileProcessing.getPosttaxtotalCostBySubscriptionID(subId));
+				output.setPartnerCenterIngramCost(rawFileProcessing.getPartnerCenterIMCostByResellerCompanyName(compName));
 			}else {
 				
 			}

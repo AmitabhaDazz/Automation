@@ -15,6 +15,7 @@ import java.util.Map;
 
 import Recon.ReconAutomation.cmp.CmpFilePojo;
 
+
 public class RawFileProcessed {
 
 	private List<RawFilePojo> RawList;

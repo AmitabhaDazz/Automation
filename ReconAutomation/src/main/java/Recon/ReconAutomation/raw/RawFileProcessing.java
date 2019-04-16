@@ -62,7 +62,7 @@ public class RawFileProcessing{
 		try {
 			FileInputStream fileInputStreamRawFile=new FileInputStream(new File(ur));
 			workbook = new XSSFWorkbook(fileInputStreamRawFile);
-			System.out.println("File:" + workbook.getSheetIndex(sheetName));
+			
 			XSSFSheet sheet = workbook.getSheetAt(0);
 			List<RawFilePojo> rawfilePojoList = new ArrayList<RawFilePojo>();
 			//		Map<String, List<RawFilePojo>> rawmapforpojo = new HashMap<String, List<RawFilePojo>>();
@@ -108,11 +108,13 @@ public class RawFileProcessing{
 		List<RawFilePojo> allsameRCNList = new ArrayList<RawFilePojo>();
 		for (Map.Entry<String, List<RawFilePojo>> entry : rawmapforpojo.entrySet()) { 
 			List<RawFilePojo> rawpojo = entry.getValue();
+			if(resellerCompanyName!=null) {
 			if(rawpojo.get(0).getResellerCompName().equalsIgnoreCase(resellerCompanyName)) {
 				allsameRCNList.addAll(rawpojo);
 			}
+			}
 		}
-			System.out.println(allsameRCNList);
+				
 			ListIterator<RawFilePojo> iterator = allsameRCNList.listIterator();
 			BigDecimal bigDecimalResellerCost = new BigDecimal(0.0);
 			bigDecimalResellerCost.setScale(3, BigDecimal.ROUND_CEILING);
@@ -186,5 +188,6 @@ public class RawFileProcessing{
 	}
 
 }
+
 
 

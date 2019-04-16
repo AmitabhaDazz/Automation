@@ -2,6 +2,7 @@ package Recon.ReconAutomation.raw;
 
 public class RawFilePojo {
 
+	
 	 String subscriptionid;
 	 String posttaxtotal;
 	 String resellerCost;

@@ -20,6 +20,7 @@ public class OutputPojo {
 	String partnerCenterCostVariencePercentage;
 	
 	
+	
 	public String getResellerCompanyName() {
 		return resellerCompanyName;
 	}

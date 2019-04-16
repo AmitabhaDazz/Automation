@@ -1,93 +1,84 @@
 package OutputAutomation;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import Recon.ReconAutomation.cmp.CmpFileProcessed;
-import Recon.ReconAutomation.cmp.CmpFileProcessing;
-public class ExcelWriter {
-	private static String[] columns = {"Reseller Company Name", "CMP IMcost", "CMP Reseller cost", "Partner center IMcost","Partner center Resellercost","Varianceimcost","variancein%","varianceResellercost","Variancein%"};
-    private static List<OutputPojo> employees =  new ArrayList<OutputPojo>();
+public class  ExcelWriter{
+	List<OutputPojo> employees= new ArrayList<OutputPojo>();
+public void printExcel(String filepath) {
+	
+	if(filepath!=null && !"".equals(filepath.trim()))
+	{
+		try
+		{
+		
+			XSSFWorkbook excelWookBook = new XSSFWorkbook();
 
-	// Initializing employees data to insert into the excel file
-   public void printExcel() {
+			
+			CreationHelper createHelper = excelWookBook.getCreationHelper();
 
-	   try {
-        // Create a Workbook
-        Workbook workbook = new XSSFWorkbook(); // new HSSFWorkbook() for generating `.xls` file
+		
+			Sheet sheet = excelWookBook.createSheet("Variance per reseller level");
 
-        /* CreationHelper helps us create instances of various things like DataFormat, 
-           Hyperlink, RichTextString etc, in a format (HSSF, XSSF) independent way */
-        CreationHelper createHelper = workbook.getCreationHelper();
+			
+			/*/ First create header row. /*/
+			Row headerRow = sheet.createRow(0);
 
-        // Create a Sheet
-        Sheet sheet = workbook.createSheet("Employee");
+			headerRow.createCell(0).setCellValue("Resellercompanyname");
+			headerRow.createCell(1).setCellValue("CMP IMcost");
+			headerRow.createCell(2).setCellValue("CMP Reseller cost");
+			headerRow.createCell(3).setCellValue("Partner center IMcost");
+			headerRow.createCell(4).setCellValue("Partner center Resellercost");
+			headerRow.createCell(5).setCellValue("Varianceimcost");
 
-        // Create a Font for styling header cells
-        Font headerFont = workbook.createFont();
-        // Create a CellStyle with the font
-        CellStyle headerCellStyle = workbook.createCellStyle();
-        // Create a Row
-        Row headerRow = sheet.createRow(0);
+			
+			/*/ Loop for the employee dto list, add each employee data info into one row. /*/
+			
+			
+			CaseInsensitiveMap<String, OutputPojo> outputMapFinal = new CaseInsensitiveMap<String, OutputPojo>();
+			for (Map.Entry<String,OutputPojo> entry : outputMapFinal.entrySet()) {
+				String resellecrCompanyNameFinal= entry.getKey();
+				OutputPojo outputObjLocal = outputMapFinal.get(resellecrCompanyNameFinal);
+			}
+			
+			
+			if(employees!=null)
+			{
+				int size = employees.size();
+				for(int i=0;i<size;i++)
+				{
+					OutputPojo eDto = employees.get(i);
 
-        // Create cells
-        for(int i = 0; i < columns.length; i++) {
-            Cell cell = headerRow.createCell(i);
-            cell.setCellValue(columns[i]);
-            cell.setCellStyle(headerCellStyle);
-        }
+					/*/ Create row to save employee info. /*/
+					Row row = sheet .createRow(i+1);
 
-        // Create Cell Style for formatting Date
-        CellStyle dateCellStyle = workbook.createCellStyle();
-        
-        // Create Other rows and cells with employees data
-        int rowNum = 1;
-        for(OutputPojo employee: employees) {
-            Row row = sheet.createRow(rowNum++);
+					row.createCell(0).setCellValue(eDto.getResellerCompanyName() );
+					row.createCell(1).setCellValue(eDto.getCmpIngramMicroCost());
+					row.createCell(2).setCellValue(eDto.getCmpResellerCost());
+					row.createCell(3).setCellValue(eDto.getPartnerCenterIngramCost() );
+					row.createCell(4).setCellValue(eDto.getParnerCenterResellerCost());
 
-            row.createCell(0)
-                    .setCellValue(employee.cmpIngramMicroCost);
+				}
+			}
 
-            row.createCell(1)
-                    .setCellValue(employee.cmpResellerCost);
+				/* / Write to excel file / */
+			FileOutputStream fOut = new FileOutputStream(filepath);
+			excelWookBook.write(fOut);
+			fOut.close();
 
-
-            row.createCell(3)
-                    .setCellValue(employee.partnerCenterCostVarience);
-        }
-
-		// Resize all columns to fit the content size
-        for(int i = 0; i < columns.length; i++) {
-            sheet.autoSizeColumn(i);
-        }
-
-        // Write the output to a file
-        FileOutputStream fileOut = new FileOutputStream("poi-generated-file.xlsx");
-      
-			workbook.write(fileOut);
-			  fileOut.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("File " + filepath + " is created successfully. ");
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
-      
-
-        // Closing the workbook
-     
-    }
+	}
+}
 }

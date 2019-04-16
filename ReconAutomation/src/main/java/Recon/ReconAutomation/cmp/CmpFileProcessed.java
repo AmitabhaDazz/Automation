@@ -84,14 +84,22 @@ public class CmpFileProcessed {
 	}
 
 	
+	
 	public String getResellerCompanyNameBySubscriptionID(String subscriptionID){
 		List<CmpFilePojo> subTotal = subscriptionIDMap.get(subscriptionID);
-		ListIterator<CmpFilePojo> iterator = subTotal.listIterator();
-		String resellecCompanyName= null;
+		ListIterator<CmpFilePojo> iterator = null;
+		if(subTotal!=null) {
+			iterator = subTotal.listIterator();
+			
+			String resellecCompanyName= null;
 		while (iterator.hasNext()) {
 			CmpFilePojo obj = (CmpFilePojo)iterator.next();
 			resellecCompanyName = obj.getResellerCompanyName().toString();
 			return resellecCompanyName;
+		}
+		}
+		else {
+			
 		}
 		return null;
 	}

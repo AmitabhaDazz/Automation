@@ -108,12 +108,16 @@ public class RawFileProcessing{
 		List<RawFilePojo> allsameRCNList = new ArrayList<RawFilePojo>();
 		for (Map.Entry<String, List<RawFilePojo>> entry : rawmapforpojo.entrySet()) { 
 			List<RawFilePojo> rawpojo = entry.getValue();
-			if(resellerCompanyName!=null) {
+			if(resellerCompanyName!=null && rawpojo.get(0).getResellerCompName().toString()!=null) {
 			if(rawpojo.get(0).getResellerCompName().equalsIgnoreCase(resellerCompanyName)) {
 				allsameRCNList.addAll(rawpojo);
 			}
 			}
+			else {
+				System.out.println(resellerCompanyName);
+			}
 		}
+		
 				
 			ListIterator<RawFilePojo> iterator = allsameRCNList.listIterator();
 			BigDecimal bigDecimalResellerCost = new BigDecimal(0.0);

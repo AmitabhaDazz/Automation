@@ -49,6 +49,7 @@ public class RawFileProcessed {
 	}
 
 
+	
 	public Map<String, List<RawFilePojo>> getSubscriptionIDMap() {
 		return subscriptionIDMap;
 	}

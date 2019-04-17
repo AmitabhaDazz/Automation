@@ -9,7 +9,10 @@ public class RawFilePojo {
 	 String resellerCompName;
 	 
 	 public String getResellerCompName() {
+		 if(resellerCompName!=null)
 		return resellerCompName;
+		 else
+			 return "NA";
 	}
 
 	public void setResellerCompName(String resellerCompName) {
@@ -20,6 +23,7 @@ public class RawFilePojo {
 		return resellerCost;
 	}
 
+	
 	public void setResellerCost(String resellerCost) {
 		this.resellerCost = resellerCost;
 	}

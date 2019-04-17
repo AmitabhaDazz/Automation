@@ -21,12 +21,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import OutputAutomation.ExcelWriter;
 import OutputAutomation.OutputPojo;
-import OutputAutomation.OutputPojoforReseller;
 import Recon.ReconAutomation.cmp.CmpFilePojo;
 import Recon.ReconAutomation.cmp.CmpFileProcessed;
 import Recon.ReconAutomation.cmp.CmpFileProcessing;
 import Recon.ReconAutomation.raw.RawFilePojo;
 import Recon.ReconAutomation.raw.RawFileProcessing;
+
 
 public class StartAuto {
 	public static void main(String[] args) throws IOException {
@@ -39,6 +39,7 @@ public class StartAuto {
 		  String urloutput=configPath.readFileOutput();
 		 
 		
+		  
 		
 //		RawFileProcessed processedObj = new RawFileProcessed(rawFileProcessing.getRawFilePojoMap());
 //		processedObj.createMapBySubscriptionID();
@@ -64,6 +65,7 @@ public class StartAuto {
 			String subscriptionID = entry.getKey();
 			OutputPojo subIdBag= new OutputPojo();
 			subIdBag.setCmpIngramMicroCost(processedObj.getPartnerCostBySubscriptionID(subscriptionID).toString());
+			
 			subIdBag.setCmpResellerCost(processedObj.getResellerCostBySubscriptionID(subscriptionID).toString());
 			subIdBag.setResellerCompanyName(processedObj.getResellerCompanyNameBySubscriptionID(subscriptionID));
 			subIdBag.setParnerCenterResellerCost(rawFileProcessing.getResellerCostBySubscriptionID(subscriptionID));
@@ -81,8 +83,6 @@ public class StartAuto {
 				output.setResellerCompanyName(processedObj.getResellerCompanyNameBySubscriptionID(subId.toString()));
 				output.setParnerCenterResellerCost(rawFileProcessing.getResellerCostByResellerCompanyName(compName));
 				output.setPartnerCenterIngramCost(rawFileProcessing.getPartnerCenterIMCostByResellerCompanyName(compName));
-			}else {
-				
 			}
 		}
 		

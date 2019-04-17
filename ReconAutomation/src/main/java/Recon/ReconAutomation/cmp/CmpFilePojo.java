@@ -13,6 +13,7 @@ public class CmpFilePojo {
 		
 	}
 	
+	
 	public CmpFilePojo(String resellerCompanyName,String subscriptionId,String resellerCost,String partnerCost) {
 		this.resellerCompanyName = resellerCompanyName;
 		this.subscriptionId = subscriptionId;

@@ -11,6 +11,7 @@ public class configFileProcess {
 	public String readFileCmp() {
 		String ar=null;
 		
+		
 		 ar	= rb.getString("cmp");
 	    return ar;
 	}

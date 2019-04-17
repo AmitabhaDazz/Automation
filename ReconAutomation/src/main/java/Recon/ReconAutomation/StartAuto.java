@@ -65,7 +65,6 @@ public class StartAuto {
 			String subscriptionID = entry.getKey();
 			OutputPojo subIdBag= new OutputPojo();
 			subIdBag.setCmpIngramMicroCost(processedObj.getPartnerCostBySubscriptionID(subscriptionID).toString());
-			
 			subIdBag.setCmpResellerCost(processedObj.getResellerCostBySubscriptionID(subscriptionID).toString());
 			subIdBag.setResellerCompanyName(processedObj.getResellerCompanyNameBySubscriptionID(subscriptionID));
 			subIdBag.setParnerCenterResellerCost(rawFileProcessing.getResellerCostBySubscriptionID(subscriptionID));
@@ -94,7 +93,7 @@ public class StartAuto {
 		for (Map.Entry<String,OutputPojo> entry : outputMap.entrySet()) {
 			String subId= entry.getKey();
 			OutputPojo outputObjLocal = outputMap.get(subId);
-			if(outputMapFinal.containsKey(outputObjLocal.getResellerCompanyName())) {
+//			if(outputMapFinal.containsKey(outputObjLocal.getResellerCompanyName())) {
 				outputObjLocal = outputMap.get(subId);
 				
 				BigDecimal bigDecimalCmpIngramMicroCost = new BigDecimal(outputObjLocal.getCmpIngramMicroCost());
@@ -102,11 +101,11 @@ public class StartAuto {
 				outputObjLocal.setCmpIngramMicroCost(bigDecimalCmpIngramMicroCost.toString());
 				
 				outputMapFinal.put(outputObjLocal.getResellerCompanyName(), outputObjLocal);
-			}else {
+//			}else {
 				if(rawFileProcessing.getRawmapforpojo().containsKey(subId)) {
 					outputMapFinal.put(outputObjLocal.getResellerCompanyName(), outputObjLocal);
 				}
-			}
+//			}
 		}
 		int i=0;
 		int size = outputMapFinal.size();

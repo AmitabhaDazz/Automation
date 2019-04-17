@@ -78,7 +78,6 @@ public class StartAuto {
 			OutputPojo output = outputMap.get(subId);
 			if(output!=null && subId != null) {
 				String compName=processedObj.getResellerCompanyNameBySubscriptionID(subId);
-				System.out.println(compName);
 				output.setResellerCompanyName(processedObj.getResellerCompanyNameBySubscriptionID(subId.toString()));
 				output.setParnerCenterResellerCost(rawFileProcessing.getResellerCostByResellerCompanyName(compName));
 				output.setPartnerCenterIngramCost(rawFileProcessing.getPartnerCenterIMCostByResellerCompanyName(compName));
@@ -119,12 +118,12 @@ public class StartAuto {
 		headerRow.createCell(3).setCellValue("Partner center IMcost");
 		headerRow.createCell(4).setCellValue("Partner center Resellercost");
 		headerRow.createCell(5).setCellValue("Varianceimcost");
-		headerRow.createCell(5).setCellValue("Varianceimcostin%");
-		headerRow.createCell(5).setCellValue("VariancePCcost");
-		headerRow.createCell(5).setCellValue("VariancePCcostin%");
+		headerRow.createCell(6).setCellValue("Varianceimcostin%");
+		headerRow.createCell(7).setCellValue("VariancePCcost");
+		headerRow.createCell(8).setCellValue("VariancePCcostin%");
 		for (Map.Entry<String,OutputPojo> entry : outputMapFinal.entrySet()) {
 			String resellecrCompanyNameFinal= entry.getKey();
-			Row row = sheet .createRow(i+1);
+			Row row = sheet .createRow(i+4);
 			OutputPojo outputObjLocal = outputMapFinal.get(resellecrCompanyNameFinal);
 			//System.out.println(outputObjLocal.getResellerCompanyName() + "-" + outputObjLocal.getCmpIngramMicroCost() +"-"+ outputObjLocal.getCmpResellerCost()+"-"+outputObjLocal.getPartnerCenterIngramCost()+"-"+outputObjLocal.getParnerCenterResellerCost());
 			//System.out.println(outputObjLocal.getResellerCompanyName() + "-" + processedObj.getCmpIngramMicroCostByResellerCompName(resellecrCompanyNameFinal) +"-"+ processedObj.getCmpResellerCostByResellerCompName(resellecrCompanyNameFinal)+"-"+outputObjLocal.getPartnerCenterIngramCost()+"-"+outputObjLocal.getParnerCenterResellerCost());
@@ -133,7 +132,36 @@ public class StartAuto {
 			row.createCell(2).setCellValue(processedObj.getCmpResellerCostByResellerCompName(resellecrCompanyNameFinal));
 			row.createCell(3).setCellValue(outputObjLocal.getPartnerCenterIngramCost() );
 			row.createCell(4).setCellValue(outputObjLocal.getParnerCenterResellerCost());
-	
+			if(!outputObjLocal.getPartnerCenterIngramCost().equals("NA") && !processedObj.getCmpIngramMicroCostByResellerCompName(resellecrCompanyNameFinal).equals("NA")) {
+				row.createCell(5).setCellValue(Double.parseDouble(outputObjLocal.getPartnerCenterIngramCost())-Double.parseDouble(processedObj.getCmpIngramMicroCostByResellerCompName(resellecrCompanyNameFinal)));
+				row.createCell(6).setCellValue(
+						(
+								(
+								Double.parseDouble(outputObjLocal.getPartnerCenterIngramCost())-Double.parseDouble(processedObj.getCmpIngramMicroCostByResellerCompName(resellecrCompanyNameFinal))
+						)/Double.parseDouble(outputObjLocal.getPartnerCenterIngramCost())
+						)*100
+						);
+
+				
+			}else {
+				row.createCell(5).setCellValue("NA");
+				row.createCell(6).setCellValue("NA");
+			}
+			if(!outputObjLocal.getParnerCenterResellerCost().equals("NA") && !processedObj.getCmpResellerCostByResellerCompName(resellecrCompanyNameFinal).equals("NA")) {
+				row.createCell(7).setCellValue(Double.parseDouble(outputObjLocal.getParnerCenterResellerCost())-Double.parseDouble(processedObj.getCmpResellerCostByResellerCompName(resellecrCompanyNameFinal)));
+				row.createCell(8).setCellValue(
+						(
+								(
+										Double.parseDouble(outputObjLocal.getParnerCenterResellerCost())-Double.parseDouble(processedObj.getCmpResellerCostByResellerCompName(resellecrCompanyNameFinal))
+						)/Double.parseDouble(outputObjLocal.getParnerCenterResellerCost())
+						)*100
+						);
+
+				
+			}else {
+				row.createCell(7).setCellValue("NA");
+				row.createCell(8).setCellValue("NA");
+			}
 			i++;
 		}
 		

@@ -60,7 +60,9 @@ public class RawFileProcessing{
 		String sheetName = "AP Recon";
 		XSSFWorkbook workbook;
 		try {
-			FileInputStream fileInputStreamRawFile=new FileInputStream(new File(ur));
+			File f=new File(ur);	
+			if(f.exists()) {
+			FileInputStream fileInputStreamRawFile=new FileInputStream(f);
 			workbook = new XSSFWorkbook(fileInputStreamRawFile);
 			
 			XSSFSheet sheet = workbook.getSheetAt(0);
@@ -96,6 +98,11 @@ public class RawFileProcessing{
 				rownum++;
 			}
 			fileInputStreamRawFile.close();
+		}
+			else {
+				System.out.println("File not exits");
+				System.exit(0);
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();

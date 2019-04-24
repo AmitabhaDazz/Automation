@@ -34,7 +34,7 @@ public class CmpFileProcessing {
 					  }
 					  
 				  }else {
-					  System.out.println("Skipped...." + rownum);
+					/* System.out.println("Skipped...." + rownum); */
 				  }
 				  rownum++;
 				  this.setCmpfilePojoList(cmpfilePojoList);
